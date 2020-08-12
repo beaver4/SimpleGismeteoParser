@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-
+# -*- coding: UTF-8 -*-
+import sys
 import requests
 from bs4 import BeautifulSoup
 
+if len (sys.argv) == 2:
+    URL = sys.argv[1]
+else:
+    URL = 'https://www.gismeteo.ru/weather-bryansk-4258/now/'
+    
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0'}
 
-response = requests.get('https://www.gismeteo.ru/weather-bryansk-4258/now/', headers=headers)
+response = requests.get(URL, headers=headers)
 contents = response.text
 soup = BeautifulSoup(contents, 'lxml')
 
