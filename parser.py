@@ -11,9 +11,9 @@ soup = BeautifulSoup(contents, 'lxml')
 
  
 temperature_now = soup.find("span", attrs={ "class" : "js_value tab-weather__value_l"}).text.strip() 
-temperature_value_m_element = soup.find("span", attrs={ "class" : "tab-weather__value_m"})
-if not temperature_value_m_element is None:
-    temperature_now = temperature_now + temperature_value_m_element.text.strip()
+#temperature_value_m_element = soup.find("span", attrs={ "class" : "tab-weather__value_m"})
+#if not temperature_value_m_element is None:
+#    temperature_now = temperature_now + temperature_value_m_element.text.strip()
 
 now_info_element = soup.find("div", attrs={ "class" : "now__info nowinfo"})
 
