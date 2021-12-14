@@ -37,10 +37,10 @@ temperature_water_element = now_info_element.find("div", attrs={ "class" : "nowi
 temperature_water = temperature_water_element.find("div", attrs={ "class" : "unit unit_temperature_c"}).text.replace("°C", "")
 
 print("Температура воздуха: " + temperature_now + "°C")
-print("Скорость ветра: " + wind_speed + " м/с")
+print("Ветер: " + wind_speed + " м/с " + wind_direction)
 print("Давление: " + pressure + " мм рт. ст.")
-print("Влажность: " + humidity + "%")
-print("Г/м активность: " + magnetic + " баллов")
-print("Температура воды: " + temperature_water + "°C")
+#print("Влажность: " + humidity + "%")
+#print("Г/м активность: " + magnetic + " баллов")
+#print("Температура воды: " + temperature_water + "°C")
 
 
