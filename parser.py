@@ -9,7 +9,9 @@ if len (sys.argv) == 2:
 else:
     URL = 'https://www.gismeteo.ru/weather-bryansk-4258/now/'
     
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0'}
+headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:95.0) Gecko/20100101 Firefox/95.0'}
+BLUE = '\033[96m'
+ENDC = '\033[0m'
 
 response = requests.get(URL, headers=headers)
 contents = response.text
@@ -36,9 +38,9 @@ pressure = now_info_element.find("div", attrs={ "class" : "unit unit_pressure_mm
 #temperature_water_element = now_info_element.find("div", attrs={ "class" : "nowinfo__item nowinfo__item_water"})
 #temperature_water = temperature_water_element.find("div", attrs={ "class" : "unit unit_temperature_c"}).text.replace("°C", "")
 
-print("Температура воздуха: " + temperature_now + "°C")
-print("Ветер: " + wind_speed + " м/с " + wind_direction)
-print("Давление: " + pressure + " мм рт. ст.")
+print(BLUE + "Температура воздуха: " + ENDC + temperature_now + "°C")
+print(BLUE + "Ветер: " + ENDC + wind_speed + " м/с " + wind_direction)
+print(BLUE + "Давление: " + ENDC + pressure + " мм рт. ст.")
 #print("Влажность: " + humidity + "%")
 #print("Г/м активность: " + magnetic + " баллов")
 #print("Температура воды: " + temperature_water + "°C")
