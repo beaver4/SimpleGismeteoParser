@@ -29,7 +29,7 @@ wind_element = now_info_element.find("div", attrs={ "class" : "unit unit_wind_m_
 wind_speed = wind_element.find(text=True, recursive=False).strip()
 wind_direction = wind_element.find("div", attrs={ "class" : "item-measure"}).text.replace("м/c", "").strip()
 
-pressure = now_info_element.find("div", attrs={ "class" : "unit unit_pressure_mm_hg_atm"}).text.replace("ммрт. ст.", "").strip()
+pressure = now_info_element.find("div", attrs={ "class" : "unit unit_pressure_mm_hg"}).text.replace("ммрт. ст.", "").strip()
 
 #humidity = now_info_element.find("div", attrs={ "class" : "nowinfo__item nowinfo__item_humidity"}).text.replace("Влажность", "").replace("%", "").strip()
 
