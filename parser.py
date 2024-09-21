@@ -3,15 +3,21 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
+import argparse
+import json
 
-if len (sys.argv) == 2:
-    URL = sys.argv[1]
-else:
-    URL = 'https://www.gismeteo.ru/weather-bryansk-4258/now/'
-    
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Parse weather data from Gismeteo.')
+    parser.add_argument('url', nargs='?', help='URL of the weather page', default='https://www.gismeteo.ru/weather-bryansk-4258/now/')
+    parser.add_argument('-j', '--json', action='store_true', help='Output in JSON format')
+    return parser.parse_args()
+
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:95.0) Gecko/20100101 Firefox/95.0'}
 BLUE = '\033[96m'
 ENDC = '\033[0m'
+
+args = parse_arguments()
+URL = args.url
 
 response = requests.get(URL, headers=headers)
 contents = response.text
@@ -41,11 +47,18 @@ else:
 #temperature_water_element = now_info_element.find("div", attrs={ "class" : "nowinfo__item nowinfo__item_water"})
 #temperature_water = temperature_water_element.find("div", attrs={ "class" : "unit unit_temperature_c"}).text.replace("°C", "")
 
-print(BLUE + "Температура воздуха: " + ENDC + temperature_now + " °C")
-print(BLUE + "Ветер: " + ENDC + wind_speed + " м/с")
-print(BLUE + "Давление: " + ENDC + pressure + " мм рт. ст.")
-#print("Влажность: " + humidity + "%")
-#print("Г/м активность: " + magnetic + " баллов")
-#print("Температура воды: " + temperature_water + "°C")
-
-
+if args.json:
+    data = {
+        "temperature": f"{temperature_now}°C",
+        "wind_speed": f"{wind_speed} м/с" if wind_speed else None,
+        "pressure": f"{pressure} мм рт. ст." if pressure else None
+    }
+    json_output = json.dumps(data, indent=2, ensure_ascii=False)
+    print(json_output)
+else:
+    print(BLUE + "Температура воздуха: " + ENDC + temperature_now + " °C")
+    print(BLUE + "Ветер: " + ENDC + wind_speed + " м/с")
+    print(BLUE + "Давление: " + ENDC + pressure + " мм рт. ст.")
+    #print("Влажность: " + humidity + "%")
+    #print("Г/м активность: " + magnetic + " баллов")
+    #print("Температура воды: " + temperature_water + "°C")
