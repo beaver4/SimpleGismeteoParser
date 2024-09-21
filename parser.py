@@ -18,18 +18,21 @@ contents = response.text
 soup = BeautifulSoup(contents, 'lxml')
 
  
-temperature_now = soup.find("span", attrs={ "class" : "unit unit_temperature_c"}).text.strip() 
+temperature_now = soup.find("temperature-value")['value']
 #temperature_value_m_element = soup.find("span", attrs={ "class" : "tab-weather__value_m"})
 #if not temperature_value_m_element is None:
 #    temperature_now = temperature_now + temperature_value_m_element.text.strip()
 
 now_info_element = soup.find("div", attrs={ "class" : "now-info"})
 
-wind_element = now_info_element.find("div", attrs={ "class" : "unit unit_wind_m_s"})
-wind_speed = wind_element.find(text=True, recursive=False).strip()
-wind_direction = wind_element.find("div", attrs={ "class" : "item-measure"}).text.replace("м/c", "").strip()
-
-pressure = now_info_element.find("div", attrs={ "class" : "unit unit_pressure_mm_hg"}).text.replace("ммрт. ст.", "").strip()
+if now_info_element:
+    speed_value_element = now_info_element.find("speed-value")
+    wind_speed = speed_value_element['value']
+    
+    pressure_value_element = now_info_element.find("pressure-value")
+    pressure = pressure_value_element['value']
+else:
+    print("Now info element not found.")
 
 #humidity = now_info_element.find("div", attrs={ "class" : "nowinfo__item nowinfo__item_humidity"}).text.replace("Влажность", "").replace("%", "").strip()
 
@@ -38,8 +41,8 @@ pressure = now_info_element.find("div", attrs={ "class" : "unit unit_pressure_mm
 #temperature_water_element = now_info_element.find("div", attrs={ "class" : "nowinfo__item nowinfo__item_water"})
 #temperature_water = temperature_water_element.find("div", attrs={ "class" : "unit unit_temperature_c"}).text.replace("°C", "")
 
-print(BLUE + "Температура воздуха: " + ENDC + temperature_now + "°C")
-print(BLUE + "Ветер: " + ENDC + wind_speed + " м/с " + wind_direction)
+print(BLUE + "Температура воздуха: " + ENDC + temperature_now + " °C")
+print(BLUE + "Ветер: " + ENDC + wind_speed + " м/с")
 print(BLUE + "Давление: " + ENDC + pressure + " мм рт. ст.")
 #print("Влажность: " + humidity + "%")
 #print("Г/м активность: " + magnetic + " баллов")
